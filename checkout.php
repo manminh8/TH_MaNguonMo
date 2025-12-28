@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //    -> Thường được xử lý trong file order_processing.php
     
     // Lưu thông tin đơn hàng và chuyển hướng đến trang xác nhận
-    $_SESSION['order_details'] = [
+    $_SESSION['order_data'] = [
         'items' => $cart_items,
         'customer' => $customer_info,
         'final_total' => $final_total,

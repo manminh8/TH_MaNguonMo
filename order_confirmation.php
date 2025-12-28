@@ -3,12 +3,14 @@
 // Mục đích: Xử lý dữ liệu giỏ hàng, lưu vào donhang và chitietdonhang, sau đó chuyển hướng.
 
 session_start();
-
 // --- 1. Kiểm tra Dữ liệu cần thiết ---
-
+if (!isset($_SESSION['user'])) {
+    header('Location: views/auth/login.php');
+    exit;
+}
 // A. Kiểm tra session giỏ hàng và dữ liệu đơn hàng đã chuẩn bị từ checkout.php
-if (!isset($_SESSION['cart']) || empty($_SESSION['cart']) || !isset($_SESSION['order_data'])) {
-    header('Location: index.php'); // Quay về trang chủ nếu không có dữ liệu
+if (!isset($_SESSION['order_data']) || empty($_SESSION['order_data'])) {
+    header('Location: index.php');
     exit;
 }
 
@@ -18,10 +20,10 @@ $cart_items = $_SESSION['cart'];
 
 // --- 2. Kết nối và Khởi tạo Model ---
 
-$rootPath = __DIR__ . '/..';
+
 // Giả định các file này nằm ở cấp độ gốc của ứng dụng (ngang hàng với checkout.php)
-require_once $rootPath . '/core/public/database.php';
-require_once $rootPath . '/models/OrderModel.php';
+require_once __DIR__ . '/core/database.php';
+require_once __DIR__ . '/models/OrderModel.php';
 // require_once $rootPath . '/models/ProductModel.php'; // Cần cho việc trừ tồn kho
 
 // Khởi tạo đối tượng Model
@@ -38,7 +40,7 @@ try {
     $pdo->beginTransaction(); 
 
     // 3.1. Tạo Đơn hàng mới (bảng donhang)
-    $TongGia = $order_data['TongGia']; 
+    $TongGia = $order_data['final_total']; 
     
     // Hàm createOrder đã được sửa để chấp nhận các trường mới
     $MaDonHangMoi = $orderModel->createOrder($order_data, $TongGia);
