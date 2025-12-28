@@ -3,7 +3,7 @@
 session_start();
 
 // Kiểm tra xem giỏ hàng đã tồn tại chưa
-if (!isset($_SESSION['cart'])) {
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     // Chuyển hướng nếu giỏ hàng trống
     header('Location: cart.php');
     exit;
