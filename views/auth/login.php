@@ -35,12 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: ../../admin/index.php'); 
         } else {
             // Chuyển hướng đến Trang chủ (Customer)
-            header('Location: ../../../index.php'); 
+            header('Location: /TH_MaNguonMo/index.php'); 
         }
         exit();
     } else {
         // 4. Đăng nhập thất bại
-        $message = "Email hoặc mật khẩu không đúng. Vui lòng thử lại.";
+        //$message = "Email hoặc mật khẩu không đúng. Vui lòng thử lại.";
     }
 }
 ?>
