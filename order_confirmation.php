@@ -51,14 +51,18 @@ try {
         $detailsSuccess = $orderModel->createOrderDetails($MaDonHangMoi, $cart_items);
 
         if ($detailsSuccess) {
-            // 3.3. Cập nhật tồn kho (Nếu có ProductModel)
-            // Lưu ý: Cần thêm hàm updateStock($MaSanPham, $SoLuongGiam) vào ProductModel
-            /*
-            foreach ($cart_items as $item) {
-                $productModel->updateStock($item['id'], $item['quantity']); 
-            }
-            */
+              foreach ($cart_items as $item) {
+                $ok = $productModel->decreaseStock(
+                    $item['id'],
+                    $item['quantity']
+                );
 
+                if (!$ok) {
+                    $pdo->rollBack();
+                    $error_message = 'Sản phẩm "' . $item['name'] . '" không đủ tồn kho.';
+                    break;
+                }
+            }
             $pdo->commit(); // Ghi dữ liệu vào database
             $success = true;
         } else {
