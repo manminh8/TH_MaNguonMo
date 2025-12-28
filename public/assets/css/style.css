@@ -1,0 +1,572 @@
+/* =========================================================
+   styles.css — Gundam Shop (Aurora Teal Theme)
+   - Accent: Teal (xanh ngọc) + Electric Blue
+   - Header/Footer glossy black
+   - FIX dropdown Danh mục bị banner đè (z-index + overflow)
+   - Dãn menu Trang chủ / Sản phẩm / Danh mục
+   - Products: "Lọc theo Danh mục" đổi sang TEAL đồng bộ
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap');
+
+/* =========================
+   1) VARIABLES (AURORA TEAL)
+   ========================= */
+:root{
+  --page-bg: #f6f7fb;
+  --page-bg-2: #ffffff;
+
+  /* dark surfaces */
+  --surface-2:#0b1220;
+  --surface:#111827;
+
+  /* text */
+  --text:#0f172a;
+  --muted:#64748b;
+
+  /* accents */
+  --accent:#14b8a6;        /* teal */
+  --accent-hover:#0f766e;  /* teal đậm */
+  --accent2:#38bdf8;       /* electric blue */
+  --danger:#ff4d4f;        /* đỏ nhẹ */
+
+  /* radius + shadow */
+  --radius:10px;
+  --radius-lg:16px;
+  --shadow-soft:0 10px 22px rgba(15,23,42,.10);
+  --shadow:0 16px 34px rgba(15,23,42,.14);
+
+  /* borders */
+  --border:rgba(15,23,42,.10);
+  --border-2:rgba(15,23,42,.07);
+
+  /* typography */
+  --font-body: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Poppins", "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* =========================
+   2) BASE + TYPO
+   ========================= */
+html, body{ height:100%; }
+
+body{
+  font-family: var(--font-body);
+  background: var(--page-bg);
+  color: var(--text);
+  overflow-x:hidden;
+
+  font-size: 15.5px;
+  line-height: 1.65;
+  letter-spacing: 0.1px;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* glow nhẹ nền */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    radial-gradient(900px 520px at 12% -5%, rgba(20,184,166,.12), transparent 55%),
+    radial-gradient(900px 520px at 88% 0%, rgba(56,189,248,.10), transparent 55%),
+    radial-gradient(900px 520px at 50% 120%, rgba(15,23,42,.06), transparent 65%);
+}
+
+a{ color: inherit; text-decoration:none; }
+a:hover{ color: var(--accent-hover); }
+
+p{ color: var(--muted); }
+.text-muted{ color: var(--muted) !important; }
+
+h1,h2,h3,h4,h5,.navbar-brand{
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+h1{ font-weight: 900; line-height: 1.15; }
+h2{ font-weight: 850; line-height: 1.25; }
+h3{ font-weight: 800; line-height: 1.25; }
+h4,h5{ font-weight: 750; }
+
+main{ padding-top: 16px; }
+section{ margin: 46px 0; }
+
+/* =========================
+   3) GLOBAL FRAMES
+   ========================= */
+.page-frame,
+.section-frame{
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.93));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 22px 54px rgba(15,23,42,.10);
+  padding: 28px 22px;
+  color: var(--text);
+}
+
+/* =========================
+   4) NAVBAR (glossy black)
+   ========================= */
+.navbar.bg-dark,
+.navbar.navbar-light.bg-light{
+  background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%) !important;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 12px 28px rgba(0,0,0,.45);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden; /* sẽ override để dropdown không bị cắt */
+}
+
+.navbar.bg-dark::before,
+.navbar.navbar-light.bg-light::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(520px 120px at 18% 0%, rgba(20,184,166,.26), transparent 60%),
+    radial-gradient(520px 120px at 82% 0%, rgba(56,189,248,.18), transparent 60%);
+  opacity:.95;
+}
+
+.navbar.bg-dark::after,
+.navbar.navbar-light.bg-light::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:2px;
+  pointer-events:none;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(20,184,166,.85),
+    rgba(56,189,248,.65),
+    transparent
+  );
+}
+
+.navbar.bg-dark > *,
+.navbar.navbar-light.bg-light > *{
+  position: relative;
+  z-index: 1;
+}
+
+.navbar .navbar-brand{
+  font-weight: 900;
+  font-size: 1.35rem;
+  color: rgba(255,255,255,.95) !important;
+}
+
+.navbar .nav-link{
+  color: rgba(255,255,255,.90) !important;
+  font-weight: 750;
+  font-size: 14px;
+  letter-spacing: .2px;
+  border-radius: 12px;
+  padding: .55rem 1.05rem;
+  transition: background .18s ease, transform .18s ease;
+}
+.navbar .nav-link:hover{
+  background: rgba(255,255,255,.10);
+  transform: translateY(-1px);
+}
+.navbar .nav-link.active{
+  background: rgba(20,184,166,.18);
+  box-shadow: 0 10px 18px rgba(0,0,0,.25);
+}
+
+/* Search */
+.navbar .input-group .form-control{
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.08);
+  color:#fff;
+  border-radius: 999px 0 0 999px;
+}
+.navbar .input-group .form-control::placeholder{
+  color: rgba(255,255,255,.70);
+}
+.navbar .input-group .btn{
+  border-radius: 0 999px 999px 0;
+  border:1px solid rgba(255,255,255,.14);
+}
+
+/* Dropdown */
+.dropdown-menu{
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:14px;
+  background: #0f172a;
+  box-shadow: 0 18px 42px rgba(0,0,0,.45);
+  padding:.55rem;
+}
+.dropdown-item{
+  border-radius:12px;
+  padding:.55rem .75rem;
+  font-weight:650;
+  color: rgba(229,231,235,.92);
+}
+.dropdown-item:hover{
+  background: rgba(20,184,166,.16);
+  color:#fff;
+}
+
+/* =========================
+   4.1) FIX: Dropdown bị banner đè
+   ========================= */
+.navbar.bg-dark,
+.navbar.navbar-light.bg-light{
+  overflow: visible !important;
+}
+.navbar{
+  position: relative;
+  z-index: 5000 !important;
+}
+.navbar .dropdown-menu{
+  z-index: 6000 !important;
+}
+.hero-section{
+  position: relative;
+  z-index: 1 !important;
+}
+
+/* =========================
+   4.2) Dãn menu
+   ========================= */
+.navbar .navbar-nav{ gap: 10px; }
+
+/* =========================
+   5) BUTTONS
+   ========================= */
+.btn{
+  font-family: var(--font-body);
+  font-weight: 850;
+  letter-spacing: .2px;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, filter .18s ease;
+  border-radius: 12px;
+}
+
+/* primary (teal) */
+.btn-primary{
+  background: linear-gradient(180deg, var(--accent), var(--accent-hover)) !important;
+  border: 0 !important;
+  box-shadow: 0 14px 26px rgba(20,184,166,.20);
+}
+.btn-primary:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 18px 32px rgba(20,184,166,.26);
+}
+
+/* outline secondary: trắng/clean */
+.btn-outline-secondary{
+  background: #f8fafc !important;
+  border: 1px solid rgba(15,23,42,.18) !important;
+  color: #111827 !important;
+  box-shadow: 0 8px 18px rgba(15,23,42,.06);
+}
+.btn-outline-secondary:hover{
+  background: #ffffff !important;
+  border-color: rgba(20,184,166,.45) !important;
+  color: var(--accent-hover) !important;
+  box-shadow: 0 14px 26px rgba(20,184,166,.14);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   6) HERO / BANNER
+   ========================= */
+.hero-section{
+  padding: 92px 0;
+  margin-bottom: 34px;
+  overflow:hidden;
+
+  background-image:
+    linear-gradient(120deg, rgba(10,16,30,.60), rgba(17,24,39,.55)),
+    url('../images/banner-gundam.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border: 1px solid rgba(15,23,42,.08);
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+}
+
+.hero-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(900px 520px at 20% 10%, rgba(20,184,166,.16), transparent 60%),
+    radial-gradient(900px 520px at 80% 15%, rgba(56,189,248,.12), transparent 60%);
+  z-index:0;
+}
+
+.hero-section .container{
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  text-align:center;
+}
+
+.hero-section h1,
+.hero-section .display-4{
+  color: #ffffff !important;
+  text-shadow: 0 10px 28px rgba(0,0,0,.55);
+  font-weight: 900;
+  line-height: 1.15;
+}
+.hero-section .lead{
+  color: rgba(255,255,255,.88) !important;
+  max-width: 860px;
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* "Xem sản phẩm" trắng hover sáng */
+.hero-section .btn-outline-primary,
+.hero-section .btn-outline-secondary{
+  background: #ffffff !important;
+  border: 1px solid rgba(255,255,255,.85) !important;
+  color: #0b1220 !important;
+  box-shadow: 0 12px 26px rgba(0,0,0,.25);
+}
+.hero-section .btn-outline-primary:hover,
+.hero-section .btn-outline-secondary:hover{
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(0,0,0,.32);
+}
+
+/* "Mua ngay" hover đỏ nhẹ */
+.hero-section .btn-primary:hover{
+  background: linear-gradient(180deg, var(--danger), var(--accent)) !important;
+  box-shadow: 0 18px 36px rgba(255,77,79,.18);
+}
+
+/* =========================
+   7) SECTION FRAMES (Home)
+   ========================= */
+.latest-products,
+.newest-products,
+.products-latest,
+.section-products,
+.products-section,
+.features-section,
+.why-us,
+.why-choose-us,
+#why-us{
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.93));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 22px 54px rgba(15,23,42,.10);
+  padding: 28px 22px;
+}
+
+/* =========================
+   8) CARDS
+   ========================= */
+.card{
+  border: 1px solid rgba(15,23,42,.06);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+}
+.card:hover{ box-shadow: var(--shadow); }
+
+/* =========================
+   9) PRODUCT CARD
+   ========================= */
+.product-card{
+  background: #ffffff !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(15,23,42,.06) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 10px 22px rgba(15,23,42,.10) !important;
+  overflow: hidden;
+  transition: transform .22s ease, box-shadow .22s ease;
+  height: 100%;
+}
+.product-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(15,23,42,.14) !important;
+}
+
+.product-card img,
+.product-image,
+#main-product-image{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  display:block;
+  background:#f1f5f9 !important;
+  border-radius: var(--radius) var(--radius) 0 0 !important;
+}
+
+.product-card .card-title,
+.product-card .card-title a{
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 900 !important;
+  letter-spacing: -0.01em;
+  color: var(--text) !important;
+}
+.product-card .card-title a:hover{ color: var(--accent-hover) !important; }
+
+/* price */
+.product-card .product-price,
+.product-card .text-primary{
+  color: var(--accent) !important;
+  font-size: 16px;
+  font-weight: 900 !important;
+}
+
+/* add to cart hover đỏ nhẹ */
+.product-card .btn-primary:hover{
+  background: linear-gradient(180deg, var(--danger), var(--accent)) !important;
+  box-shadow: 0 18px 34px rgba(255,77,79,.14);
+  transform: translateY(-1px);
+}
+
+/* "Xem chi tiết" đậm rõ */
+.product-card .btn-outline-secondary{
+  font-weight: 900 !important;
+  font-size: 13.5px !important;
+}
+
+/* =========================
+   10) PRODUCTS PAGE FILTER (TEAL)
+   ========================= */
+.page-products .filter-card{
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(15,23,42,.08);
+  overflow: hidden;
+  box-shadow: 0 16px 34px rgba(15,23,42,.08);
+}
+
+/* Header: đổi từ xanh bootstrap -> TEAL */
+.page-products .filter-card .card-header,
+.page-products .filter-card .card-header.bg-primary{
+  background: linear-gradient(180deg, var(--accent), var(--accent-hover)) !important;
+  color:#fff !important;
+  border: 0 !important;
+  position: relative;
+}
+.page-products .filter-card .card-header::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.60), transparent);
+}
+
+.page-products .filter-card .list-group-item{
+  border-color: rgba(15,23,42,.08) !important;
+  font-weight: 800;
+}
+
+/* hover teal nhẹ */
+.page-products .filter-card .list-group-item:hover{
+  background: rgba(20,184,166,.10) !important;
+}
+
+/* active teal rõ + chữ trắng */
+.page-products .filter-card .list-group-item.active{
+  background: linear-gradient(180deg, rgba(20,184,166,.28), rgba(15,118,110,.22)) !important;
+  border-color: rgba(20,184,166,.35) !important;
+  color: #0b1220 !important;
+  font-weight: 900;
+}
+
+/* =========================
+   10.1) Pagination
+   ========================= */
+.pagination .page-link{
+  border-radius: 999px !important;
+  margin: 0 4px;
+  border: 1px solid rgba(15,23,42,.10);
+  color: #111827;
+  font-weight: 900;
+  background: #fff;
+}
+.pagination .page-link:hover{
+  background: rgba(20,184,166,.10);
+  border-color: rgba(20,184,166,.25);
+  color: var(--accent-hover);
+}
+.pagination .page-item.active .page-link{
+  background: linear-gradient(180deg, var(--accent), var(--accent-hover)) !important;
+  border: 0 !important;
+  color: #fff !important;
+}
+
+/* =========================
+   11) FORMS
+   ========================= */
+.form-control, .form-select{
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,.12);
+  padding: .6rem .85rem;
+  background: #ffffff;
+  color: var(--text);
+}
+.form-control::placeholder{ color: rgba(100,116,139,.80); }
+.form-control:focus, .form-select:focus{
+  border-color: rgba(20,184,166,.45);
+  box-shadow: 0 0 0 .2rem rgba(20,184,166,.14);
+}
+
+/* =========================
+   12) FOOTER
+   ========================= */
+.footer, footer{
+  background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%) !important;
+  color: rgba(229,231,235,.90);
+  padding: 48px 0;
+  margin-top: 46px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  position: relative;
+  overflow:hidden;
+}
+.footer::before, footer::before{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:0;
+  height:2px;
+  pointer-events:none;
+  background: linear-gradient(90deg, transparent, rgba(20,184,166,.85), rgba(56,189,248,.60), transparent);
+}
+.footer a, footer a{ color: rgba(229,231,235,.78); }
+.footer a:hover, footer a:hover{ color:#fff; }
+
+/* =========================
+   13) Reduce motion
+   ========================= */
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; scroll-behavior:auto !important; }
+}
+/* Dropdown Danh mục: hover xanh ngọc */
+.navbar .dropdown-menu .dropdown-item:hover,
+.navbar .dropdown-menu .dropdown-item:focus{
+  background: rgba(11, 94, 84, 0.26) !important; /* teal nhẹ */
+  color: #ffffff !important;
+}
+
+/* Nếu muốn item đang active (đúng danh mục đang xem) cũng xanh ngọc */
+.navbar .dropdown-menu .dropdown-item.active{
+  background: rgba(11, 94, 84, 0.26) !important;
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+/* Trong style.css (Bản có lỗi) */
+.product-grid {
+    display: flex;
+    flex-wrap: nowrap; /* Lỗi: Không cho phép xuống dòng trên màn hình nhỏ */
+}
+.product-item {
+    width: 300px; /* Lỗi: Độ rộng cố định quá lớn cho Mobile */
+}
