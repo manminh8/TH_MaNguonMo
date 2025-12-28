@@ -60,7 +60,7 @@
                     </span>
                 </a>
 
-                <a href="login.php" class="btn btn-outline-success">
+                <a href="./views/auth/login.php" class="btn btn-outline-success">
                     <i class="fas fa-sign-in-alt"></i> Đăng nhập
                 </a>
             </div>
