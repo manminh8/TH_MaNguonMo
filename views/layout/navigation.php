@@ -59,6 +59,10 @@
                         <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>
                     </span>
                 </a>
+
+                <a href="login.php" class="btn btn-outline-success">
+                    <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                </a>
             </div>
         </div>
     </div>
