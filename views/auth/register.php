@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             // 4. Đăng ký thất bại (Thường là do email đã tồn tại)
-            // $message = "Đăng ký thất bại. Email này có thể đã được sử dụng.";
+            $message = "Đăng ký thất bại. Email này có thể đã được sử dụng.";
         }
     }
 }
