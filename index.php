@@ -26,7 +26,7 @@ $categories = $categoryModel->getAllCategories();
 <!DOCTYPE html>
 <html lang="vi">
 
-<head>  
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gundam Model Shop - Mô Hình Gundam Chính Hãng</title>
@@ -45,14 +45,12 @@ $categories = $categoryModel->getAllCategories();
 
 <body>
 
-    <p>Nguyễn Quang Thắng</p>
-
     <?php include 'views/layout/navigation.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container text-center">
-            <h1 class="display-4 fw-bold mb-3">Mô Hình Gundam Chính Hãng</h1>
+            <h1 class="display-4 fw-bold mb-3">Mô Hình Gundam Chính Hãng Nguyễn Thanh Phúc</h1>
             <p class="lead mb-4">Khám phá bộ sưu tập mô hình Gundam Bandai chính hãng từ Nhật Bản</p>
             <a href="products.php" class="btn btn-primary btn-lg me-2">
                 <i class="fas fa-shopping-bag me-2"></i> Mua ngay
@@ -83,7 +81,7 @@ $categories = $categoryModel->getAllCategories();
             <?php endif; ?>
 
             <!-- Categories Section -->
-            <!-- <section class="categories-section mb-5">
+            <section class="categories-section mb-5">
                 <h2 class="text-center mb-4">Danh Mục Sản Phẩm</h2>
                 <div class="row">
                     <?php if ($categories && count($categories) > 0): ?>
@@ -115,7 +113,7 @@ $categories = $categoryModel->getAllCategories();
                         </div>
                     <?php endif; ?>
                 </div>
-            </section> -->
+            </section>
 
             <!-- Products Section -->
             <section id="products" class="products-section">
