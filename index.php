@@ -46,7 +46,7 @@ $categories = $categoryModel->getAllCategories();
 <body>
 
     <?php include 'views/layout/navigation.php'; ?>
-
+    <h1>Vương Thái Tài</h1>
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container text-center">
