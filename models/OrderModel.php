@@ -16,36 +16,46 @@ class OrderModel
      * @param decimal $total Tổng giá trị đơn hàng (TongGia).
      * @return int|bool Mã đơn hàng mới nếu thành công, False nếu thất bại.
      */
-    public function createOrder($data, $total)
-    {
-        // Cập nhật: Sử dụng tên cột và trạng thái đã thống nhất
-        $sql = "INSERT INTO donhang (
-                    MaNguoiDung, TenKhachHang, EmailKhachHang, SDTNhanHang, DiaChiGiaoHang, TongGia, PhuongThucThanhToan, TrangThai, NgayTao
-                ) VALUES (
-                    :manguoidung, :tenkhachhang, :emailkhachhang, :sdth, :diachi, :tonggia, :pttt, 'pending', NOW()
-                )";
-        try {
-            $stmt = $this->pdo->prepare($sql);
-            
-            // Liên kết các tham số mới
-            $stmt->bindValue(':manguoidung', $data['MaNguoiDung'] ?? null, PDO::PARAM_INT); 
-            $stmt->bindParam(':tenkhachhang', $data['HoTen']); // Lấy từ $_SESSION['order_data']['HoTen']
-            $stmt->bindParam(':emailkhachhang', $data['Email']); // Lấy từ $_SESSION['order_data']['Email']
-            
-            // Các trường đã có sẵn
-            $stmt->bindParam(':sdth', $data['SDTNhanHang']);
-            $stmt->bindParam(':diachi', $data['DiaChiGiaoHang']);
-            $stmt->bindParam(':tonggia', $total);
-            $stmt->bindParam(':pttt', $data['PhuongThucThanhToan']);
-            
-            $stmt->execute();
+ public function createOrder(array $data, float $total)
+{
+    $sql = "INSERT INTO donhang (
+        MaNguoiDung,
+        TongGia,
+        TrangThai,
+        PhuongThucThanhToan,
+        DiaChiGiaoHang,
+        SDTNhanHang,
+        NgayTao
+    ) VALUES (
+        :manguoidung,
+        :tonggia,
+        'pending',
+        :pttt,
+        :diachi,
+        :sdt,
+        NOW()
+    )";
 
-            return $this->pdo->lastInsertId();
-        } catch (PDOException $e) {
-            // Log lỗi $e->getMessage()
-            return false;
-        }
+    $maNguoiDung = $_SESSION['user']['id'] ?? null;
+
+    try {
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':manguoidung' => $maNguoiDung,
+            ':tonggia'     => $total,
+            ':pttt'        => $data['customer']['payment_method'],
+            ':diachi'      => $data['customer']['address'],
+            ':sdt'         => $data['customer']['phone'],
+        ]);
+
+        return $this->pdo->lastInsertId();
+
+    } catch (PDOException $e) {
+        var_dump($e->getMessage());
+        exit;
     }
+}
+
 
     /**
      * Lưu chi tiết các mặt hàng vào bảng chitietdonhang. (GIỮ NGUYÊN)
