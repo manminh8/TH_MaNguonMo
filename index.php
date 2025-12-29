@@ -44,7 +44,7 @@ $categories = $categoryModel->getAllCategories();
 </head>
 
 <body>
-
+    <p>Vương Thái Tài</p>
     <p>Nguyễn Quang Thắng</p>
 
     <?php include 'views/layout/navigation.php'; ?>
