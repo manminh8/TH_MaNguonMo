@@ -45,6 +45,8 @@ $categories = $categoryModel->getAllCategories();
 
 <body>
 
+    <p>Nguyễn Quang Thắng</p>
+
     <?php include 'views/layout/navigation.php'; ?>
 
     <!-- Hero Section -->
