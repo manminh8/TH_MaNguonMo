@@ -120,7 +120,7 @@ $categories = $categoryModel->getAllCategories();
             <!-- Products Section -->
             <section id="products" class="products-section">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Hồ Minh Mẫn</h2>
+                    <h2>Hồ Minh Mẫn </h2>
                     <a href="products.php" class="btn btn-link">
                         Xem tất cả <i class="fas fa-arrow-right ms-1"></i>
                     </a>
