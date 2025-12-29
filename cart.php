@@ -62,7 +62,7 @@ $total_amount = 0; // Tổng tiền của giỏ hàng
                 <?php foreach ($cart_items as $product_id => $item): 
                     // Tính toán thành tiền cho từng sản phẩm
                     $subtotal = $item['price'] * $item['quantity'];
-                    $total_amount = $subtotal;
+                    $total_amount += $subtotal;
                 ?>
                     <tr>
                         <td><img src="<?php echo htmlspecialchars($item['image'] ?? ''); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="cart-image"></td>

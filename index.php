@@ -44,11 +44,11 @@ $categories = $categoryModel->getAllCategories();
 </head>
 
 <body>
-
+    <p>Vương Thái Tài</p>
     <p>Nguyễn Quang Thắng</p>
 
     <?php include 'views/layout/navigation.php'; ?>
-
+    <h1>Vương Thái Tài</h1>
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container text-center">
